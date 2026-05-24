@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isLogin = true;
 
-    // ===== ОЧИСТКА ФОРМЫ =====
     function clearForm() {
         authForm.reset();
         authMessage.textContent = "";
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         emailInput.focus();
     }
 
-    // ===== ПЕРЕКЛЮЧЕНИЕ РЕЖИМА =====
     function switchMode(login) {
         isLogin = login;
         if (login) {
@@ -35,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
             authBtn.textContent = "Зарегистрироваться";
             confirmPasswordInput.required = true;
         }
-        clearForm(); // Данные очищаются при переключении
+        clearForm();
     }
 
     switchBtn.addEventListener("click", (e) => {
@@ -43,20 +41,17 @@ document.addEventListener("DOMContentLoaded", () => {
         switchMode(!isLogin);
     });
 
-    // ===== ПОКАЗ СООБЩЕНИЙ =====
     function showMessage(text, type) {
         authMessage.textContent = text;
         authMessage.className = `auth-message ${type}`;
     }
 
-    // ===== ОТПРАВКА ФОРМЫ =====
     authForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
         const confirmPassword = confirmPasswordInput.value.trim();
 
-        // Валидация
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             showMessage("Введите корректный email", "error");
@@ -71,29 +66,26 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Состояние загрузки
         authBtn.disabled = true;
         authBtn.textContent = "Вход...";
         authMessage.textContent = "";
 
-        // Имитация запроса (600ms)
         setTimeout(() => {
             try {
                 if (isLogin) {
-                    // ЛОГИКА ВХОДА
                     const users = JSON.parse(localStorage.getItem("users")) || [];
                     const user = users.find(u => u.email === email);
-                    
                     if (user && user.password === password) {
                         localStorage.setItem("isAuth", "true");
                         localStorage.setItem("currentUserEmail", email);
+                        // СОХРАНЯЕМ ОБЪЕКТ ПОЛЬЗОВАТЕЛЯ ДЛЯ ОТОБРАЖЕНИЯ В ПРОФИЛЕ
+                        localStorage.setItem("user", JSON.stringify({ email: email }));
                         showMessage("Успешный вход!", "success");
                         setTimeout(() => window.location.href = "html_main.html", 800);
                     } else {
                         showMessage("Неверный email или пароль", "error");
                     }
                 } else {
-                    // ЛОГИКА РЕГИСТРАЦИИ
                     const users = JSON.parse(localStorage.getItem("users")) || [];
                     if (users.some(u => u.email === email)) {
                         showMessage("Email уже занят", "error");
@@ -101,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         users.push({ email, password });
                         localStorage.setItem("users", JSON.stringify(users));
                         showMessage("Аккаунт создан!", "success");
+                        // После регистрации переключаем на форму входа, пользователь заходит сам
                         setTimeout(() => switchMode(true), 1500);
                     }
                 }
@@ -113,6 +106,5 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 600);
     });
 
-    // Автофокус
     emailInput.focus();
 });

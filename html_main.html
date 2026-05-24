@@ -5,53 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Главное меню</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Иконки (опционально, можно использовать Font Awesome или SVG) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="dark-theme"> <!-- По умолчанию тёмная тема как у SoundCloud -->
+<body class="dark-theme">
 
     <!-- ===== ШАПКА САЙТА ===== -->
     <header class="header">
-        <!-- Кнопка бургер-меню для мобильной навигации -->
         <button id="burger" aria-label="Меню">
             <i class="fas fa-bars"></i>
         </button>
         
-        <!-- Поиск заметок -->
         <div class="search-wrapper">
             <i class="fas fa-search search-icon"></i>
             <input type="text" id="searchInput" class="search-header" placeholder="Поиск заметок...">
         </div>
         
-        <!-- Профиль пользователя -->
         <div class="profile-wrapper">
             <div class="profile-btn" id="profileBtn" aria-label="Профиль">
                 <span id="profileLetter">U</span>
                 <img src="" alt="Аватар" id="profileAvatar" class="profile-avatar hidden">
             </div>
             
-            <!-- Выпадающее меню профиля -->
             <div class="profile-dropdown hidden" id="profileDropdown">
                 <div class="profile-email" id="profileEmail">user@mail.com</div>
                 
-                <!-- Загрузка аватара -->
                 <label class="avatar-upload">
                     <i class="fas fa-image"></i>
                     <span>Изменить фото</span>
                     <input type="file" id="avatarInput" accept="image/*" hidden>
                 </label>
                 
-                <!-- Удаление аватара -->
                 <button class="remove-avatar-btn" id="removeAvatarBtn">
                     <i class="fas fa-trash"></i> Удалить фото
                 </button>
                 
-                <!-- Переход в корзину -->
-                <button id="openTrashBtn">
-                    <i class="fas fa-trash"></i> Корзина
-                </button>
-                
-                <!-- Выход из аккаунта -->
                 <button id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i> Выйти
                 </button>
@@ -61,20 +48,17 @@
 
     <!-- ===== БОКОВАЯ ПАНЕЛЬ НАВИГАЦИИ ===== -->
     <nav class="sidebar" id="sidebar">
-        <!-- Логотип приложения -->
         <div class="logo">
-            <i class="fas fa-music"></i>
+            <i class="fa-brands fa-soundcloud"></i>
             <span>SoundNotes</span>
         </div>
         
-        <!-- Меню навигации -->
         <ul class="menu">
             <li><a href="#" class="chapter active" id="notesBtn"><i class="fas fa-sticky-note"></i> Заметки</a></li>
             <li><a href="#" class="chapter" id="labelsBtn"><i class="fas fa-tag"></i> Ярлыки</a></li>
             <li><a href="#" class="chapter" id="trashBtn"><i class="fas fa-trash"></i> Корзина</a></li>
             <li><a href="#" class="chapter" id="settingsBtn"><i class="fas fa-cog"></i> Настройки</a></li>
             <li><a href="#" class="chapter" id="helpBtn"><i class="fas fa-question-circle"></i> Справка</a></li>
-            <!-- Индикатор активного пункта (анимация) -->
             <div class="active_indicator"></div>
         </ul>
     </nav>
@@ -84,18 +68,13 @@
         
         <!-- ===== ЭКРАН: СПИСОК ЗАМЕТОК ===== -->
         <section id="notesScreen">
-            <!-- Форма создания новой заметки -->
             <div class="notes-creator">
-                <!-- Свернутая форма (превью) -->
                 <div class="note-collapsed" id="collapsedNote">
                     <input type="text" placeholder="Новая заметка..." id="noteTitle">
                 </div>
                 
-                <!-- Развернутая форма с редактором -->
                 <div class="note-expanded" id="expandedNote">
-                    <!-- ===== ПАНЕЛЬ ФОРМАТИРОВАНИЯ ТЕКСТА ===== -->
                     <div class="formatting-toolbar">
-                        <!-- Селектор стиля текста (заголовки, параграф) -->
                         <select class="format-style-select" id="formatStyle" title="Стиль текста">
                             <option value="p">Текст</option>
                             <option value="h1">Заголовок 1</option>
@@ -105,16 +84,10 @@
                         
                         <div class="divider"></div>
                         
-                        <!-- Кнопки форматирования -->
                         <button data-command="bold" title="Жирный (Ctrl+B)"><i class="fas fa-bold"></i></button>
                         <button data-command="italic" title="Курсив (Ctrl+I)"><i class="fas fa-italic"></i></button>
                         <button data-command="underline" title="Подчёркнутый (Ctrl+U)"><i class="fas fa-underline"></i></button>
                         <button data-command="strikeThrough" title="Зачёркнутый"><i class="fas fa-strikethrough"></i></button>
-                        
-                        <div class="divider"></div>
-                        
-                        <button data-command="insertUnorderedList" title="Маркированный список"><i class="fas fa-list-ul"></i></button>
-                        <button data-command="insertOrderedList" title="Нумерованный список"><i class="fas fa-list-ol"></i></button>
                         
                         <div class="divider"></div>
                         
@@ -124,17 +97,12 @@
                         
                         <div class="divider"></div>
                         
-                        <button data-command="createLink" title="Вставить ссылку"><i class="fas fa-link"></i></button>
                         <button data-command="removeFormat" title="Очистить форматирование"><i class="fas fa-eraser"></i></button>
                     </div>
                     
-                    <!-- Поле ввода заголовка -->
                     <input type="text" placeholder="Заголовок заметки" id="noteTitleExpanded">
+                    <div class="note-textarea" id="noteText" contenteditable="true" data-placeholder="Заметка..."></div>
                     
-                    <!-- Редактируемая область текста с поддержкой HTML-форматирования -->
-                    <div class="note-textarea" id="noteText" contenteditable="true" placeholder="Начните писать заметку..."></div>
-                    
-                    <!-- Кнопки действий -->
                     <div class="note-actions">
                         <button id="closeNote">Закрыть</button>
                         <button id="addNote">Добавить</button>
@@ -142,10 +110,8 @@
                 </div>
             </div>
             
-            <!-- Контейнер для сетки заметок -->
             <div class="notes-container">
                 <div class="notes-grid" id="notesGrid">
-                    <!-- Заметки будут добавлены здесь через JavaScript -->
                 </div>
             </div>
         </section>
@@ -153,11 +119,10 @@
         <!-- ===== ЭКРАН: КОРЗИНА ===== -->
         <section id="trashScreen" style="display: none;">
             <div class="notes-container">
-                <h2 style="margin-bottom: 20px; color: var(--light-text-primary);">
+                <h2 style="margin-bottom: 20px; color: var(--text-primary);">
                     <i class="fas fa-trash"></i> Корзина
                 </h2>
                 <div class="notes-grid" id="trashGrid">
-                    <!-- Удалённые заметки -->
                 </div>
             </div>
         </section>
@@ -167,7 +132,6 @@
             <div class="settings-container">
                 <h2 class="settings-title"><i class="fas fa-cog"></i> Настройки</h2>
                 
-                <!-- Секция: Отображение -->
                 <h3 class="settings-subtitle">Отображение</h3>
                 <div class="setting-item">
                     <div>
@@ -180,7 +144,6 @@
                     </label>
                 </div>
                 
-                <!-- Секция: Удаление -->
                 <h3 class="settings-subtitle">Удаление</h3>
                 <div class="setting-item">
                     <div>
@@ -193,7 +156,6 @@
                     </label>
                 </div>
                 
-                <!-- Секция: Тема оформления -->
                 <h3 class="settings-subtitle">Цвет</h3>
                 <div class="setting-item">
                     <label class="setting-label">
@@ -213,28 +175,6 @@
                         Использовать мой цветовой режим Windows
                     </label>
                 </div>
-                
-                <!-- Секция: Справка -->
-                <div class="settings-divider"></div>
-                <h3 class="settings-subtitle">Справка и обратная связь</h3>
-                <div class="setting-section">
-                    <a href="#" class="setting-link"><i class="fas fa-question-circle"></i> Справка</a>
-                    <a href="#" class="setting-link"><i class="fas fa-comment"></i> Оставить отзыв</a>
-                    <a href="#" class="setting-link"><i class="fas fa-star"></i> Оценить приложение</a>
-                </div>
-                
-                <!-- Секция: О программе -->
-                <div class="about-section">
-                    <h3 class="settings-subtitle">О программе</h3>
-                    <p class="about-version">SoundNotes 6.1.4.0</p>
-                    <p class="about-copyright">© Корпорация Майкрософт (Microsoft Corporation), 2026. Все права защищены.</p>
-                    <div class="about-links">
-                        <a href="#" class="setting-link">Условия использования</a>
-                        <a href="#" class="setting-link">Дополнительные условия</a>
-                        <a href="#" class="setting-link">Политика конфиденциальности</a>
-                        <a href="#" class="setting-link">Уведомления третьих лиц</a>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -242,7 +182,7 @@
         <section id="helpScreen" style="display: none;">
             <div class="settings-container">
                 <h2 class="settings-title"><i class="fas fa-question-circle"></i> Справка</h2>
-                <p style="color: var(--light-text-secondary); line-height: 1.6;">
+                <p style="color: var(--text-secondary); line-height: 1.6;">
                     Здесь будет информация о том, как использовать приложение...
                 </p>
             </div>
@@ -253,57 +193,55 @@
             <div class="settings-container">
                 <h2 class="settings-title"><i class="fas fa-tag"></i> Мои ярлыки</h2>
                 
-                <!-- Форма создания нового ярлыка -->
                 <div class="labels-add-section">
-                    <input type="text" class="label-input" id="newLabelInput" placeholder="Название ярлыка...">
+                    <input type="text" class="label-input" id="newLabelInput" placeholder="Название ярлыка..." maxlength="20">
                     <button class="label-create-btn" id="createLabelBtn">Создать</button>
                 </div>
                 
-                <!-- Список созданных ярлыков -->
                 <div class="labels-list" id="labelsList">
-                    <!-- Ярлыки будут добавлены через JavaScript -->
                 </div>
             </div>
         </section>
 
         <!-- ===== ЭКРАН: ЗАМЕТКИ ПО ЯРЛЫКУ ===== -->
         <section id="labelNotesScreen" style="display: none;">
-            <!-- Кнопки навигации на экране ярлыка -->
             <div class="labels-header">
                 <button class="back-btn" id="backToLabelsBtn" style="display: none;">
-                    <i class="fas fa-arrow-left"></i> Назад к ярлыкам
+                    Назад к ярлыкам
                 </button>
                 <button class="delete-label-btn" id="deleteCurrentLabelBtn" style="display: none;">
-                    <i class="fas fa-trash"></i> Удалить этот ярлык
+                    Удалить этот ярлык
                 </button>
             </div>
             
-            <!-- Форма создания заметки с текущим ярлыком -->
             <div class="notes-creator">
                 <div class="note-collapsed-label" id="collapsedNoteLabel">
                     <input type="text" placeholder="Новая заметка с ярлыком..." id="noteTitleLabel">
                 </div>
                 
                 <div class="note-expanded-label" id="expandedNoteLabel">
-                    <!-- Панель форматирования (аналогична основной) -->
                     <div class="formatting-toolbar">
-                        <select class="format-style-select" id="formatStyleLabel">
+                        <select class="format-style-select" id="formatStyleLabel" title="Стиль текста">
                             <option value="p">Текст</option>
                             <option value="h1">Заголовок 1</option>
                             <option value="h2">Заголовок 2</option>
                             <option value="h3">Заголовок 3</option>
                         </select>
                         <div class="divider"></div>
-                        <button data-command="bold"><i class="fas fa-bold"></i></button>
-                        <button data-command="italic"><i class="fas fa-italic"></i></button>
-                        <button data-command="underline"><i class="fas fa-underline"></i></button>
+                        <button data-command="bold" title="Жирный"><i class="fas fa-bold"></i></button>
+                        <button data-command="italic" title="Курсив"><i class="fas fa-italic"></i></button>
+                        <button data-command="underline" title="Подчёркнутый"><i class="fas fa-underline"></i></button>
+                        <button data-command="strikeThrough" title="Зачёркнутый"><i class="fas fa-strikethrough"></i></button>
                         <div class="divider"></div>
-                        <button data-command="insertUnorderedList"><i class="fas fa-list-ul"></i></button>
-                        <button data-command="justifyLeft"><i class="fas fa-align-left"></i></button>
+                        <button data-command="justifyLeft" title="По левому краю"><i class="fas fa-align-left"></i></button>
+                        <button data-command="justifyCenter" title="По центру"><i class="fas fa-align-center"></i></button>
+                        <button data-command="justifyRight" title="По правому краю"><i class="fas fa-align-right"></i></button>
+                        <div class="divider"></div>
+                        <button data-command="removeFormat" title="Очистить форматирование"><i class="fas fa-eraser"></i></button>
                     </div>
                     
                     <input type="text" placeholder="Заголовок" id="noteTitleExpandedLabel">
-                    <div class="note-textarea-label" id="noteTextLabel" contenteditable="true"></div>
+                    <div class="note-textarea-label" id="noteTextLabel" contenteditable="true" data-placeholder="Заметка..."></div>
                     
                     <div class="note-actions">
                         <button id="closeNoteLabel">Закрыть</button>
@@ -312,7 +250,6 @@
                 </div>
             </div>
             
-            <!-- Сетка заметок с выбранным ярлыком -->
             <div class="notes-container">
                 <div class="notes-grid" id="labelNotesGrid"></div>
             </div>
@@ -340,7 +277,6 @@
             <h3 class="modal-title">Добавить ярлык</h3>
             <select class="modal-select" id="modalLabelSelect">
                 <option value="">Выберите ярлык</option>
-                <!-- Опции добавляются через JS -->
             </select>
             <div class="modal-actions">
                 <button class="modal-btn modal-btn-cancel" id="modalAddLabelCancel">Отмена</button>
@@ -349,7 +285,6 @@
         </div>
     </div>
 
-    <!-- Подключение JavaScript -->
     <script src="main.js"></script>
 </body>
 </html>

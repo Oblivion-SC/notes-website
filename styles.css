@@ -1,43 +1,50 @@
 /* ============================================
-   NOTES APP - STYLES (SoundCloud Theme)
-   Цветовая схема: официальная палитра SoundCloud [[9]]
+   NOTES APP - STYLES (Auth Menu Style)
+   Плавная смена темы, анимация полоски, нет анимации у кнопки "Ярлык"
    ============================================ */
 
-/* ===== CSS VARIABLES для удобного управления цветами ===== */
+/* ===== CSS VARIABLES ===== */
 :root {
-    /* Primary colors - SoundCloud brand */
-    --sc-orange: #FF5500;           /* Основной акцентный цвет */
-    --sc-orange-hover: #E64D00;     /* Orange при наведении */
-    
-    /* Light theme colors */
-    --light-bg: #FAFAFA;            /* Фон страницы (светлый) */
-    --light-card: #FFFFFF;          /* Фон карточек */
-    --light-text-primary: #121212;  /* Основной текст */
-    --light-text-secondary: #565656;/* Вторичный текст */
-    --light-border: #CACACA;        /* Границы */
-    --light-hover: #F2F2F2;         /* Фон при наведении */
-    
-    /* Dark theme colors */
-    --dark-bg: #121212;             /* Фон страницы (тёмный) */
-    --dark-card: #272727;           /* Фон карточек */
-    --dark-text-primary: #FAFAFA;   /* Основной текст */
-    --dark-text-secondary: #A0A0A0; /* Вторичный текст */
-    --dark-border: #565656;         /* Границы */
-    --dark-hover: #333333;          /* Фон при наведении */
-    
-    /* UI elements */
+    --accent: #FFFFFF;
+    --accent-hover: #E0E0E0;
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 12px;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
-    
-    /* Transitions */
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.3s ease;
 }
 
-/* ===== Базовые стили ===== */
+/* ===== ТЁМНАЯ ТЕМА ===== */
+body.dark-theme {
+    --bg-primary: #121212;
+    --bg-secondary: #1E1E1E;
+    --bg-hover: #2C2C2C;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B0B0B0;
+    --border: #333333;
+    --divider-light: #555555;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+    --accent-bg: #FFFFFF;
+    --accent-text: #121212;
+    --active-bg: rgba(255, 255, 255, 0.08);
+}
+
+/* ===== СВЕТЛАЯ ТЕМА ===== */
+body.light-theme {
+    --bg-primary: #F5F5F5;
+    --bg-secondary: #FFFFFF;
+    --bg-hover: #E8E8E8;
+    --text-primary: #1A1A1A;
+    --text-secondary: #666666;
+    --border: #E0E0E0;
+    --divider-light: #CCCCCC;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+    --accent-bg: #1A1A1A;
+    --accent-text: #FFFFFF;
+    --active-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Базовые стили с плавной сменой темы ===== */
 * {
     margin: 0;
     padding: 0;
@@ -46,28 +53,26 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--light-bg);
-    color: var(--light-text-primary);
-    transition: background-color var(--transition-normal), 
-                color var(--transition-normal);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     line-height: 1.5;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* ===== Тёмная тема ===== */
-body.dark-theme {
-    background-color: var(--dark-bg);
-    color: var(--dark-text-primary);
+/* Плавная смена темы для основных блоков */
+
+/* У кнопки "Ярлык" убираем анимацию (мгновенное изменение цвета) */
+.add-label-btn {
+    transition: none;
 }
 
-body.dark-theme .header,
-body.dark-theme .sidebar {
-    background-color: var(--dark-card);
-}
+/* ============================================
+   СТИЛИ ДЛЯ ГЛАВНОГО МЕНЮ
+   ============================================ */
 
-/* ===== ШАПКА САЙТА ===== */
 .header {
     height: 60px;
-    background-color: var(--dark-card); /* SoundCloud dark header */
+    background-color: var(--bg-secondary);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -76,48 +81,41 @@ body.dark-theme .sidebar {
     top: 0;
     z-index: 100;
     box-shadow: var(--shadow-sm);
+    border-bottom: 1px solid var(--border);
 }
 
-/* ===== КНОПКА БУРГЕР-МЕНЮ ===== */
 #burger {
     font-size: 22px;
     background: none;
     border: none;
-    color: var(--dark-text-primary);
+    color: var(--text-secondary);
     cursor: pointer;
     padding: 8px;
     border-radius: var(--radius-sm);
-    transition: background-color var(--transition-fast);
 }
 
 #burger:hover {
-    background-color: var(--dark-hover);
+    color: var(--text-primary);
+    background-color: transparent;
 }
 
-/* ===== БОКОВАЯ ПАНЕЛЬ (SIDEBAR) ===== */
 .sidebar {
     width: 250px;
-    background-color: var(--dark-card);
-    color: var(--dark-text-primary);
+    background-color: var(--bg-secondary);
     padding: 20px;
     height: 100vh;
     position: fixed;
     left: 0;
-    top: 60px; /* Отступ под хедер */
-    transition: transform var(--transition-normal) ease, 
-                width var(--transition-normal) ease;
+    top: 60px;
     z-index: 90;
     overflow-y: auto;
+    border-right: 1px solid var(--border);
 }
 
 .sidebar.closed {
     transform: translateX(-100%);
-    width: 0;
-    padding: 0;
-    overflow: hidden;
 }
 
-/* ===== ЛОГОТИП ===== */
 .logo {
     font-weight: 700;
     font-size: 20px;
@@ -126,12 +124,11 @@ body.dark-theme .sidebar {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: var(--sc-orange); /* SoundCloud orange для логотипа */
+    color: var(--accent-bg);
     width: 100%;
     text-align: center;
 }
 
-/* ===== ПОИСК В ХЕДЕРЕ ===== */
 .search-wrapper {
     position: relative;
     flex: 1;
@@ -144,7 +141,7 @@ body.dark-theme .sidebar {
     left: 12px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--dark-text-secondary);
+    color: var(--text-secondary);
     font-size: 14px;
     z-index: 1;
     pointer-events: none;
@@ -153,26 +150,23 @@ body.dark-theme .sidebar {
 .search-header {
     width: 100%;
     padding: 12px 15px 12px 35px;
-    background-color: var(--dark-hover);
-    border: 1px solid transparent;
+    background-color: var(--bg-hover);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    color: var(--dark-text-primary);
+    color: var(--text-primary);
     font-size: 14px;
     outline: none;
-    transition: all var(--transition-fast);
 }
 
 .search-header::placeholder {
-    color: var(--dark-text-secondary);
+    color: var(--text-secondary);
 }
 
 .search-header:focus {
-    background-color: var(--dark-card);
-    border-color: var(--sc-orange);
-    box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.2);
+    border-color: var(--accent-bg);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
-/* ===== МЕНЮ НАВИГАЦИИ ===== */
 .menu {
     display: flex;
     flex-direction: column;
@@ -187,162 +181,125 @@ body.dark-theme .sidebar {
     margin: 0 0 2px 0;
     text-decoration: none;
     font-weight: 500;
-    color: var(--dark-text-primary);
+    color: var(--text-secondary);
     border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
     position: relative;
-    height: 44px;
-    line-height: 20px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    background-color: transparent;
 }
 
 .chapter:hover {
-    background-color: var(--dark-hover);
-    color: var(--sc-orange);
+    color: var(--text-primary);
+    background-color: transparent;
 }
 
 .chapter.active {
-    color: var(--sc-orange);
-    background-color: rgba(255, 85, 0, 0.1);
+    color: var(--text-primary);
+    background-color: var(--active-bg);
 }
 
-/* Индикатор активного пункта */
 .active_indicator {
     position: absolute;
     left: -20px;
     width: 4px;
     height: 44px;
-    background-color: var(--sc-orange);
-    transition: transform var(--transition-normal) ease;
+    background-color: var(--accent-bg);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     pointer-events: none;
+    transition: transform 0.15s ease-out; /* анимация перемещения */
 }
 
-/* ===== ОСНОВНОЙ КОНТЕНТ ===== */
 .main-content {
     flex: 1;
     padding: 20px;
-    margin-left: 250px; /* Отступ под sidebar */
-    transition: margin-left var(--transition-normal);
+    margin-left: 250px;
 }
 
 .sidebar.closed + .main-content {
     margin-left: 0;
 }
 
-/* ===== СОЗДАНИЕ ЗАМЕТКИ ===== */
 .notes-creator {
     width: 100%;
     max-width: 700px;
     margin: 40px auto;
 }
 
-/* ===== ПАНЕЛЬ ФОРМАТИРОВАНИЯ ТЕКСТА ===== */
 .formatting-toolbar {
     display: flex;
     gap: 4px;
     padding: 8px;
-    background-color: var(--light-hover);
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-    border-bottom: 1px solid var(--light-border);
+    background-color: var(--bg-hover);
+    border-radius: 6px;
+    border-bottom: 1px solid var(--border);
     flex-wrap: wrap;
-}
-
-body.dark-theme .formatting-toolbar {
-    background-color: var(--dark-hover);
-    border-bottom-color: var(--dark-border);
+    align-items: center;
 }
 
 .formatting-toolbar button {
     background: transparent;
     border: 1px solid transparent;
-    color: var(--light-text-secondary);
-    padding: 6px 10px;
+    color: var(--text-secondary);
+    padding: 0;
     border-radius: var(--radius-sm);
     cursor: pointer;
     font-size: 13px;
-    font-weight: 500;
-    transition: all var(--transition-fast);
     min-width: 32px;
-    display: flex;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 
-body.dark-theme .formatting-toolbar button {
-    color: var(--dark-text-secondary);
-}
-
 .formatting-toolbar button:hover {
-    background-color: var(--sc-orange);
-    color: white;
-    border-color: var(--sc-orange);
-}
-
-.formatting-toolbar button.active {
-    background-color: var(--sc-orange);
-    color: white;
+    background-color: var(--accent-bg);
+    color: var(--accent-text);
 }
 
 .formatting-toolbar .divider {
     width: 1px;
     height: 20px;
-    background-color: var(--light-border);
+    background-color: var(--divider-light);
     margin: 0 4px;
 }
 
-body.dark-theme .formatting-toolbar .divider {
-    background-color: var(--dark-border);
-}
-
-/* Селектор стилей текста (H1, H2, P) */
 .format-style-select {
     background: transparent;
-    border: 1px solid var(--light-border);
-    color: var(--light-text-primary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
     padding: 6px 10px;
     border-radius: var(--radius-sm);
     font-size: 13px;
     cursor: pointer;
     min-width: 80px;
-}
-
-body.dark-theme .format-style-select {
-    border-color: var(--dark-border);
-    color: var(--dark-text-primary);
-    background-color: var(--dark-card);
+    background-color: var(--bg-secondary);
+    height: 32px;
 }
 
 .format-style-select:focus {
     outline: none;
-    border-color: var(--sc-orange);
+    border-color: var(--accent-bg);
 }
 
-/* ===== ПОЛЕ ВВОДА ЗАМЕТКИ (с поддержкой форматирования) ===== */
 .note-collapsed,
 .note-collapsed-label {
-    background-color: var(--light-card);
+    background-color: var(--bg-secondary);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     padding: 12px;
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
-    border: 1px solid var(--light-border);
-    transition: box-shadow var(--transition-fast);
+    border: 1px solid var(--border);
 }
 
 .note-collapsed:hover,
 .note-collapsed-label:hover {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-}
-
-body.dark-theme .note-collapsed,
-body.dark-theme .note-collapsed-label {
-    background-color: var(--dark-card);
-    border-color: var(--dark-border);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-bg);
 }
 
 .note-collapsed input,
@@ -352,58 +309,54 @@ body.dark-theme .note-collapsed-label {
     outline: none;
     font-size: 16px;
     background-color: transparent;
-    color: var(--light-text-primary);
+    color: var(--text-primary);
     font-weight: 600;
-}
-
-body.dark-theme .note-collapsed input,
-body.dark-theme .note-collapsed-label input {
-    color: var(--dark-text-primary);
 }
 
 .note-collapsed input::placeholder,
 .note-collapsed-label input::placeholder {
-    color: var(--light-text-secondary);
+    color: var(--text-secondary);
 }
 
-/* Раскрытая заметка с редактором */
 .note-expanded,
 .note-expanded-label {
     display: none;
     flex-direction: column;
-    background: var(--light-card);
+    background: var(--bg-secondary);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     padding: 15px;
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
-    border: 1px solid var(--light-border);
-}
-
-body.dark-theme .note-expanded,
-body.dark-theme .note-expanded-label {
-    background: var(--dark-card);
-    border-color: var(--dark-border);
+    border: 1px solid var(--border);
 }
 
 .note-expanded input,
 .note-expanded-label input {
     border: none;
     font-size: 18px;
-    margin-bottom: 10px;
+    margin: 12px 0 12px 0;
+    padding: 8px 0;
     outline: none;
     background-color: transparent;
-    color: var(--light-text-primary);
+    color: var(--text-primary);
     font-weight: 700;
+    border-bottom: 1px solid var(--border);
 }
 
-body.dark-theme .note-expanded input,
-body.dark-theme .note-expanded-label input {
-    color: var(--dark-text-primary);
+.note-textarea:empty:before,
+.note-textarea-label:empty:before {
+    content: attr(data-placeholder);
+    color: var(--text-secondary);
+    font-style: normal;
+    pointer-events: none;
+}
+.note-textarea:focus:before,
+.note-textarea-label:focus:before {
+    content: none;
 }
 
-/* Редактируемая область текста с поддержкой форматирования */
 .note-textarea,
 .note-textarea-label {
     border: none;
@@ -411,112 +364,788 @@ body.dark-theme .note-expanded-label input {
     outline: none;
     font-size: 15px;
     background-color: transparent;
-    color: var(--light-text-primary);
+    color: var(--text-primary);
     min-height: 150px;
     max-height: 400px;
     line-height: 1.6;
     font-family: inherit;
+    padding: 8px 0;
 }
 
-body.dark-theme .note-textarea,
-body.dark-theme .note-textarea-label {
-    color: var(--dark-text-primary);
+.note-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border);
 }
 
-.note-textarea::placeholder,
-.note-textarea-label::placeholder {
-    color: var(--light-text-secondary);
-}
-
-/* Стили для форматированного контента в режиме просмотра */
-.note-content h1 {
-    font-size: 1.5em;
+.note-actions button {
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
     font-weight: 700;
-    margin: 0.5em 0;
-    color: var(--light-text-primary);
 }
 
-.note-content h2 {
-    font-size: 1.25em;
-    font-weight: 600;
-    margin: 0.5em 0;
-    color: var(--light-text-primary);
+#addNote,
+#addNoteLabel {
+    background: var(--accent-bg);
+    color: var(--accent-text);
 }
 
-.note-content h3 {
+#addNote:hover,
+#addNoteLabel:hover {
+    color: var(--text-secondary);
+}
+
+#closeNote,
+#closeNoteLabel {
+    background: transparent;
+    color: var(--text-secondary);
+}
+
+#closeNote:hover,
+#closeNoteLabel:hover {
+    color: var(--text-primary);
+}
+
+.notes-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.notes-grid {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.note-card {
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.note-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-bg);
+}
+
+.note-card h3 {
+    margin-bottom: 10px;
     font-size: 1.1em;
     font-weight: 600;
-    margin: 0.5em 0;
-    color: var(--light-text-primary);
+    line-height: 1.4;
+    color: var(--text-primary);
+    word-wrap: break-word;
 }
 
-.note-content p {
-    margin: 0.5em 0;
-    line-height: 1.6;
+.note-card .note-text {
+    flex: 1;
+    margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-.note-content strong,
-.note-content b {
+.note-card .note-text.truncated {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    overflow: hidden;
+}
+
+.note-card .note-text.expanded {
+    display: block;
+}
+
+.note-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.label-tag {
+    display: inline-block;
+    background: var(--accent-bg);
+    color: var(--accent-text);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.label-tag:hover {
+    opacity: 0.85;
+}
+
+/* ===== КНОПКИ В КАРТОЧКАХ ===== */
+.note-card-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-btn,
+.delete-btn-label,
+.edit-btn,
+.add-label-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     font-weight: 700;
 }
-
-.note-content em,
-.note-content i {
-    font-style: italic;
+.delete-btn:hover,
+.delete-btn-label:hover,
+.edit-btn:hover {
+    color: var(--text-primary);
+}
+.add-label-btn {
+    color: var(--accent-bg);
+}
+.add-label-btn:hover {
+    opacity: 0.7;
 }
 
-.note-content u {
-    text-decoration: underline;
+/* ===== КОРЗИНА – добавлен разделитель внутри карточки и отступы ===== */
+#trashGrid .note-card {
+    text-align: left;
+    margin-bottom: 15px;
+}
+.trash-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+#trashGrid .restore-btn,
+#trashGrid .delete-forever-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+}
+#trashGrid .restore-btn:hover,
+#trashGrid .delete-forever-btn:hover {
+    color: var(--text-primary);
 }
 
-.note-content s {
-    text-decoration: line-through;
+/* ===== НАСТРОЙКИ, МОДАЛКИ, ПРОФИЛЬ, ЯРЛЫКИ ===== */
+.settings-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 20px;
 }
 
-.note-content code {
-    background-color: var(--light-hover);
-    padding: 2px 6px;
+.settings-title {
+    color: var(--text-primary);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.settings-subtitle {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 20px 0 15px;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.setting-label {
+    font-size: 15px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.setting-status {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #888888;
+    border-radius: 24px;
+    transition: background-color 0.2s ease;
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+}
+
+.toggle-switch input:checked + .toggle-slider {
+    background-color: var(--accent-bg);
+}
+
+.toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+    background-color: var(--accent-text);
+}
+
+.setting-item input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    margin-right: 10px;
+    vertical-align: middle;
+    transition: border-color 0.2s ease;
+}
+
+.setting-item input[type="radio"]:checked {
+    border-color: var(--accent-bg);
+}
+
+.setting-item input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    background: var(--accent-bg);
+    border-radius: 50%;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    padding: 25px;
+    border-radius: var(--radius-lg);
+    min-width: 380px;
+    max-width: 450px;
+    border: 1px solid var(--border);
+}
+
+.modal-title {
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.modal-text {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-btn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.modal-btn-cancel {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.modal-btn-cancel:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-bg);
+}
+
+.modal-btn-delete {
+    background: var(--accent-bg);
+    color: var(--accent-text);
+}
+
+.modal-btn-delete:hover {
+    opacity: 0.85;
+}
+
+.modal-select {
+    width: 100%;
+    padding: 10px;
+    border-radius: var(--radius-md);
+    margin-bottom: 20px;
+    font-size: 14px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.profile-wrapper {
+    position: relative;
+}
+
+.profile-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--accent-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--accent-text);
+    overflow: hidden;
+    position: relative;
+    border: 2px solid var(--accent-bg);
+}
+
+.profile-btn:hover {
+    transform: scale(1.05);
+}
+
+.profile-avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 240px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 8px;
+    z-index: 100;
+    box-shadow: var(--shadow-md);
+}
+
+.profile-email {
+    color: var(--text-secondary);
+    font-size: 13px;
+    padding: 12px 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.profile-dropdown button,
+.avatar-upload {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: inherit;
+}
+
+.profile-dropdown button:hover,
+.avatar-upload:hover {
+    background: transparent;
+    color: var(--text-primary);
+}
+
+.profile-dropdown button i,
+.avatar-upload i {
+    width: 18px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.profile-dropdown button:hover i,
+.avatar-upload:hover i {
+    color: var(--text-primary);
+}
+
+.remove-avatar-btn {
+    color: var(--text-secondary);
+}
+.remove-avatar-btn i {
+    color: var(--text-secondary);
+}
+.remove-avatar-btn:hover {
+    color: var(--text-primary);
+}
+.remove-avatar-btn:hover i {
+    color: var(--text-primary);
+}
+
+.avatar-upload input {
+    display: none;
+}
+
+.labels-list {
+    margin-top: 20px;
+}
+
+.label-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-secondary);
+    padding: 12px 15px;
+    border-radius: var(--radius-md);
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+}
+
+.label-item:hover {
+    border-color: var(--accent-bg);
+}
+
+.label-name {
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+    flex: 1;
+    max-width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.label-name:hover {
+    color: var(--accent-bg);
+}
+
+.delete-label-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    font-weight: 700;
+    margin-right: 10px;
+}
+.delete-label-btn:hover {
+    color: var(--text-primary);
+}
+
+.labels-add-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.label-input {
+    flex: 1;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    padding: 10px 15px;
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    outline: none;
+}
+
+.label-input:focus {
+    border-color: var(--accent-bg);
+}
+
+.label-create-btn {
+    background: var(--accent-bg);
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: var(--radius-md);
+    color: var(--accent-text);
+    cursor: pointer;
+    font-weight: 700;
+}
+.label-create-btn:hover {
+    color: var(--text-secondary)
+}
+
+.note-card.dragging {
+    opacity: 0.6;
+    border: 2px dashed var(--accent-bg);
+}
+
+.note-card.drag-over {
+    border-top: 3px solid var(--accent-bg);
+}
+
+.highlight {
+    background-color: var(--accent-bg);
+    color: var(--accent-text);
+    padding: 1px 4px;
     border-radius: 3px;
-    font-family: monospace;
-    font-size: 0.95em;
+    font-weight: 500;
 }
 
-body.dark-theme .note-content code {
-    background-color: var(--dark-hover);
+.empty-state {
+    color: var(--text-secondary);
+    text-align: center;
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    font-size: 16px;
+    padding: 40px;
 }
 
-.note-content blockquote {
-    border-left: 3px solid var(--sc-orange);
-    margin: 1em 0;
-    padding: 0.5em 1em;
-    color: var(--light-text-secondary);
-    background-color: var(--light-hover);
-    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+.hidden {
+    display: none;
 }
 
-body.dark-theme .note-content blockquote {
-    background-color: var(--dark-hover);
-    color: var(--dark-text-secondary);
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-bg);
+}
+
+/* ===== ИСПРАВЛЕНИЕ ДЛЯ СПИСКОВ ===== */
 .note-content ul,
-.note-content ol {
-    margin: 0.5em 0;
+.note-content ol,
+.note-textarea ul,
+.note-textarea ol,
+.note-textarea-label ul,
+.note-textarea-label ol {
+    text-align: left;
     padding-left: 1.5em;
+    margin: 0.5em 0;
+    list-style-position: outside;
 }
 
-.note-content li {
+.note-content li,
+.note-textarea li,
+.note-textarea-label li {
+    text-align: left;
     margin: 0.25em 0;
 }
 
-/* ===== АВТОРИЗАЦИЯ (GitHub Layout + SoundCloud Palette) ===== */
+.note-textarea[contenteditable="true"] p,
+.note-textarea[contenteditable="true"] h1,
+.note-textarea[contenteditable="true"] h2,
+.note-textarea[contenteditable="true"] h3,
+.note-textarea-label[contenteditable="true"] p,
+.note-textarea-label[contenteditable="true"] h1,
+.note-textarea-label[contenteditable="true"] h2,
+.note-textarea-label[contenteditable="true"] h3 {
+    margin: 0.5em 0;
+}
+
+/* ===== ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ РЕДАКТИРОВАНИЯ И ДАТЫ ===== */
+.note-card-actions button.edit-btn {
+    background: transparent;
+    font-weight: 700;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.note-card-actions button.edit-btn:hover {
+    color: var(--text-primary);
+}
+.note-date {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+body.dark-theme .note-date {
+    color: #b0b0b0;
+}
+body.light-theme .note-date {
+    color: #666666;
+}
+
+/* ===== СТИЛИ ДЛЯ КАРТОЧЕК НА ЭКРАНЕ ЯРЛЫКОВ ===== */
+#labelNotesGrid .note-card {
+    text-align: left;
+}
+.note-card-actions-vertical {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+}
+.remove-label-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+}
+.remove-label-btn:hover {
+    color: var(--text-primary);
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+    .sidebar {
+        z-index: 95;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+    .notes-creator,
+    .note-collapsed,
+    .note-expanded {
+        width: 100%;
+        max-width: 100%;
+    }
+    .formatting-toolbar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+    }
+    .formatting-toolbar::-webkit-scrollbar {
+        height: 4px;
+    }
+    .formatting-toolbar::-webkit-scrollbar-thumb {
+        background: var(--accent-bg);
+        border-radius: 2px;
+    }
+}
+
+/* ============================================
+   СТИЛИ ДЛЯ СТРАНИЦЫ АВТОРИЗАЦИИ
+   ============================================ */
+
 .auth-container {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background-color: #121212; /* SoundCloud Dark BG */
+    background-color: #121212;
 }
 
 .auth-card {
@@ -567,19 +1196,17 @@ body.dark-theme .note-content blockquote {
     color: #FAFAFA;
     font-size: 14px;
     outline: none;
-    transition: none;
 }
 
 .auth-card input:focus {
     border-color: #ffffff;
 }
 
-/* Белая кнопка с тёмным текстом */
 #authBtn {
     width: 100%;
     padding: 10px 16px;
-    background: #FFFFFF; /* Белый фон */
-    color: #1a1a1a; /* Тёмный текст */
+    background: #FFFFFF;
+    color: #1a1a1a;
     border: none;
     border-radius: 6px;
     font-size: 15px;
@@ -590,14 +1217,12 @@ body.dark-theme .note-content blockquote {
 
 #authBtn:hover {
     color: rgb(160, 162, 166);
-
 }
 
 #authBtn:disabled {
     background: #333333;
     color: #ffffff;
     cursor: not-allowed;
-    transition: none;
 }
 
 .auth-message {
@@ -612,7 +1237,6 @@ body.dark-theme .note-content blockquote {
     color: #ffffff;
 }
 
-/* Разделитель "или" */
 .auth-divider {
     display: flex;
     align-items: center;
@@ -633,15 +1257,14 @@ body.dark-theme .note-content blockquote {
     padding: 0 12px;
 }
 
-/* Переключатель внизу - БЕЛЫЕ ССЫЛКИ */
 .auth-switcher {
     text-align: center;
     font-size: 14px;
-    color: #FFFFFF; /* Белый текст */
+    color: #FFFFFF;
 }
 
 .auth-switcher a {
-    color: rgb(153,153,153); /* Белая ссылка */
+    color: rgb(153, 153, 153);
     text-decoration: none;
     margin-left: 4px;
     font-weight: 500;
@@ -649,826 +1272,30 @@ body.dark-theme .note-content blockquote {
 
 .auth-switcher a:hover {
     text-decoration: none;
-    color: #FFFFFF; /* Оранжевый при наведении */
+    color: #FFFFFF;
 }
 
 #confirmPasswordGroup.hidden {
     display: none;
 }
 
-/* ===== КНОПКИ ДЕЙСТВИЙ ===== */
-.note-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid var(--light-border);
-}
-
-body.dark-theme .note-actions {
-    border-top-color: var(--dark-border);
-}
-
-.note-actions button {
-    border: none;
-    padding: 8px 16px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all var(--transition-fast);
-}
-
-/* Кнопка "Добавить" - оранжевая как у SoundCloud */
-#addNote,
-#addNoteLabel {
-    background: var(--sc-orange);
-    color: white;
-}
-
-#addNote:hover,
-#addNoteLabel:hover {
-    background: var(--sc-orange-hover);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(255, 85, 0, 0.3);
-}
-
-/* Кнопка "Закрыть" - прозрачная */
-#closeNote,
-#closeNoteLabel {
+/* Кнопки «Назад к ярлыкам» и «Удалить этот ярлык» */
+.back-btn,
+.delete-current-label-btn {
     background: transparent;
-    color: var(--light-text-secondary);
-}
-
-body.dark-theme #closeNote,
-body.dark-theme #closeNoteLabel {
-    color: var(--dark-text-secondary);
-}
-
-#closeNote:hover,
-#closeNoteLabel:hover {
-    color: var(--sc-orange);
-    background-color: var(--light-hover);
-}
-
-body.dark-theme #closeNote:hover,
-body.dark-theme #closeNoteLabel:hover {
-    background-color: var(--dark-hover);
-}
-
-/* ===== СЕТКА ЗАМЕТОК ===== */
-.notes-container {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.notes-grid {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-/* ===== КАРТОЧКА ЗАМЕТКИ ===== */
-.note-card {
-    background: var(--light-card);
-    color: var(--light-text-primary);
-    padding: 20px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    border: none;
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: transform var(--transition-fast), 
-                box-shadow var(--transition-fast),
-                border-color var(--transition-fast);
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--light-border);
-    position: relative;
-}
-
-.note-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--sc-orange);
-}
-
-body.dark-theme .note-card {
-    background: var(--dark-card);
-    color: var(--dark-text-primary);
-    border-color: var(--dark-border);
-}
-
-.note-card h3 {
-    margin-bottom: 10px;
-    font-size: 1.1em;
-    font-weight: 600;
-    line-height: 1.4;
-}
-
-.note-card .note-text {
-    flex: 1;
-    margin-bottom: 15px;
     font-size: 14px;
-    line-height: 1.5;
-    color: var(--light-text-secondary);
-}
-
-body.dark-theme .note-card .note-text {
-    color: var(--dark-text-secondary);
-}
-
-/* Обрезанный текст для превью */
-.note-card .note-text.truncated {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.note-card .note-text.expanded {
-    display: block;
-}
-
-/* Ярлыки на карточке */
-.note-labels {
-    display: flex;
-    flex-wrap: wrap;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
     gap: 6px;
-    margin-bottom: 12px;
-}
-
-.label-tag {
-    display: inline-block;
-    background: var(--sc-orange);
-    color: white;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 4px 10px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.label-tag:hover {
-    background: var(--sc-orange-hover);
-    transform: scale(1.05);
-}
-
-/* ===== КНОПКИ В КАРТОЧКЕ ===== */
-.note-card-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: auto;
-    padding-top: 10px;
-    border-top: 1px solid var(--light-border);
-}
-
-body.dark-theme .note-card-actions {
-    border-top-color: var(--dark-border);
-}
-
-.delete-btn,
-.delete-btn-label {
-    background: transparent;
-    border: none;
-    color: var(--light-text-secondary);
-    cursor: pointer;
-    font-size: 13px;
-    padding: 6px 10px;
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
-}
-
-body.dark-theme .delete-btn,
-body.dark-theme .delete-btn-label {
-    color: var(--dark-text-secondary);
-}
-
-.delete-btn:hover,
-.delete-btn-label:hover {
-    color: #EC2E10; /* SoundCloud red для деструктивных действий */
-    background-color: rgba(236, 46, 16, 0.1);
-}
-
-.add-label-btn {
-    background: var(--sc-orange);
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: var(--radius-sm);
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-.add-label-btn:hover {
-    background: var(--sc-orange-hover);
-}
-
-.remove-label-btn {
-    background: transparent;
-    border: 1px solid var(--light-border);
-    color: var(--light-text-secondary);
-    padding: 4px 10px;
-    border-radius: var(--radius-sm);
-    font-size: 11px;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-}
-
-body.dark-theme .remove-label-btn {
-    border-color: var(--dark-border);
-    color: var(--dark-text-secondary);
-}
-
-.remove-label-btn:hover {
-    border-color: #EC2E10;
-    color: #EC2E10;
-}
-
-/* ===== КОРЗИНА ===== */
-.restore-btn {
-    background: transparent;
-    border: 1px solid #4CAF50;
-    color: #4CAF50;
-    padding: 6px 12px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-size: 13px;
-    transition: all var(--transition-fast);
-}
-
-.restore-btn:hover {
-    background: #4CAF50;
-    color: white;
-}
-
-.delete-forever-btn {
-    background: transparent;
-    border: 1px solid #EC2E10; /* SoundCloud red */
-    color: #EC2E10;
-    padding: 6px 12px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    font-size: 13px;
-    transition: all var(--transition-fast);
-}
-
-.delete-forever-btn:hover {
-    background: #EC2E10;
-    color: white;
-}
-
-/* ===== ПУСТОЕ СОСТОЯНИЕ ===== */
-.empty-state {
-    color: var(--light-text-secondary);
-    text-align: center;
-    grid-column: 1 / -1;
-    margin-top: 40px;
-    font-size: 16px;
-    padding: 40px;
-}
-
-body.dark-theme .empty-state {
-    color: var(--dark-text-secondary);
-}
-
-/* ===== ПОДСВЕТКА ПОИСКА ===== */
-.highlight {
-    background-color: var(--sc-orange);
-    color: white;
-    padding: 1px 4px;
-    border-radius: 3px;
-    font-weight: 500;
-}
-
-/* ===== НАСТРОЙКИ ===== */
-.settings-container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 20px;
-}
-
-.settings-title {
-    color: var(--light-text-primary);
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-body.dark-theme .settings-title {
-    color: var(--dark-text-primary);
-}
-
-.settings-subtitle {
-    color: var(--light-text-primary);
-    font-size: 18px;
-    font-weight: 500;
-    margin: 20px 0 15px;
-}
-
-body.dark-theme .settings-subtitle {
-    color: var(--dark-text-primary);
-}
-
-.setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--light-border);
-}
-
-body.dark-theme .setting-item {
-    border-bottom-color: var(--dark-border);
-}
-
-.setting-label {
-    font-size: 15px;
-    color: var(--light-text-primary);
-}
-
-body.dark-theme .setting-label {
-    color: var(--dark-text-primary);
-}
-
-.setting-status {
-    font-size: 13px;
-    color: var(--light-text-secondary);
-    margin-top: 4px;
-}
-
-body.dark-theme .setting-status {
-    color: var(--dark-text-secondary);
-}
-
-/* ===== TOGGLE SWITCH ===== */
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
-}
-
-.toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--light-border);
-    transition: var(--transition-normal);
-    border-radius: 24px;
-}
-
-.toggle-slider::before {
-    content: "";
-    position: absolute;
-    height: 18px;
-    width: 18px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    transition: var(--transition-normal);
-    border-radius: 50%;
-}
-
-.toggle-switch input:checked + .toggle-slider {
-    background-color: var(--sc-orange);
-}
-
-.toggle-switch input:checked + .toggle-slider::before {
-    transform: translateX(20px);
-}
-
-/* ===== RADIO BUTTONS ===== */
-.setting-item input[type="radio"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--light-border);
-    border-radius: 50%;
-    outline: none;
-    cursor: pointer;
-    position: relative;
-    transition: var(--transition-fast);
-}
-
-.setting-item input[type="radio"]:checked {
-    border-color: var(--sc-orange);
-}
-
-.setting-item input[type="radio"]:checked::after {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 10px;
-    height: 10px;
-    background: var(--sc-orange);
-    border-radius: 50%;
-}
-
-/* ===== ССЫЛКИ В НАСТРОЙКАХ ===== */
-.setting-link {
-    color: var(--light-text-primary);
-    text-decoration: none;
-    font-size: 15px;
-    padding: 6px 0;
-    display: inline-block;
-    transition: color var(--transition-fast);
-}
-
-.setting-link:hover {
-    color: var(--sc-orange);
-}
-
-.about-section {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid var(--light-border);
-}
-
-body.dark-theme .about-section {
-    border-top-color: var(--dark-border);
-}
-
-.about-version {
-    font-size: 15px;
-    color: var(--light-text-primary);
-    margin-bottom: 5px;
-}
-
-.about-copyright {
-    font-size: 13px;
-    color: var(--light-text-secondary);
-}
-
-/* ===== МОДАЛЬНОЕ ОКНО ===== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(18, 18, 18, 0.6); /* SoundCloud black with opacity */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(4px);
-}
-
-.modal-content {
-    background: var(--light-card);
-    padding: 25px;
-    border-radius: var(--radius-lg);
-    min-width: 380px;
-    max-width: 450px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--light-border);
-}
-
-body.dark-theme .modal-content {
-    background: var(--dark-card);
-    border-color: var(--dark-border);
-}
-
-.modal-title {
-    color: var(--light-text-primary);
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-body.dark-theme .modal-title {
-    color: var(--dark-text-primary);
-}
-
-.modal-text {
-    color: var(--light-text-secondary);
-    font-size: 14px;
-    margin-bottom: 20px;
-    line-height: 1.5;
-}
-
-body.dark-theme .modal-text {
-    color: var(--dark-text-secondary);
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
-.modal-btn {
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all var(--transition-fast);
-}
-
-.modal-btn-cancel {
-    background: transparent;
-    color: var(--light-text-secondary);
-    border: 1px solid var(--light-border);
-}
-
-body.dark-theme .modal-btn-cancel {
-    color: var(--dark-text-secondary);
-    border-color: var(--dark-border);
-}
-
-.modal-btn-cancel:hover {
-    color: var(--light-text-primary);
-    border-color: var(--light-text-primary);
-}
-
-.modal-btn-delete {
-    background: var(--sc-orange);
-    color: white;
-}
-
-.modal-btn-delete:hover {
-    background: var(--sc-orange-hover);
-}
-
-/* ===== ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ===== */
-.profile-wrapper {
-    position: relative;
-}
-
-.profile-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: var(--sc-orange);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-weight: 600;
-    color: white;
-    transition: transform var(--transition-fast);
-    overflow: hidden;
-    position: relative;
-    border: 2px solid var(--sc-orange);
-}
-
-.profile-btn:hover {
-    transform: scale(1.05);
-}
-
-.profile-avatar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-}
-
-.profile-dropdown {
-    position: absolute;
-    top: 55px;
-    right: 0;
-    width: 240px;
-    background: var(--dark-card);
-    border: 1px solid var(--dark-border);
-    border-radius: var(--radius-lg);
-    padding: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    z-index: 100;
-}
-
-.profile-email {
-    color: var(--dark-text-secondary);
-    font-size: 14px;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--dark-border);
-    margin-bottom: 5px;
-}
-
-.profile-dropdown button {
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: var(--dark-text-primary);
-    text-align: left;
-    padding: 12px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background-color var(--transition-fast);
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.profile-dropdown button:hover {
-    background: var(--dark-hover);
-    color: var(--sc-orange);
-}
-
-.remove-avatar-btn {
-    color: #EC2E10 !important;
-}
-
-.remove-avatar-btn:hover {
-    background: rgba(236, 46, 16, 0.1) !important;
-}
-
-/* ===== ЯРЛЫКИ ===== */
-.labels-list {
-    margin-top: 20px;
-}
-
-.label-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: var(--light-card);
-    padding: 12px 15px;
-    border-radius: var(--radius-md);
-    margin-bottom: 10px;
-    border: 1px solid var(--light-border);
-    transition: border-color var(--transition-fast);
-}
-
-.label-item:hover {
-    border-color: var(--sc-orange);
-}
-
-body.dark-theme .label-item {
-    background: var(--dark-card);
-    border-color: var(--dark-border);
-}
-
-.label-name {
-    color: var(--light-text-primary);
-    font-weight: 500;
-    cursor: pointer;
-    flex: 1;
-}
-
-body.dark-theme .label-name {
-    color: var(--dark-text-primary);
-}
-
-.label-name:hover {
-    color: var(--sc-orange);
-}
-
-.delete-label-btn {
-    background: transparent;
-    border: none;
-    color: #EC2E10;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 6px 10px;
-    border-radius: var(--radius-sm);
-    transition: background-color var(--transition-fast);
-}
-
-.delete-label-btn:hover {
-    background: rgba(236, 46, 16, 0.1);
-}
-
-.labels-add-section {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.label-input {
-    flex: 1;
-    background: var(--light-card);
-    border: 1px solid var(--light-border);
-    padding: 10px 15px;
-    border-radius: var(--radius-md);
-    color: var(--light-text-primary);
-    outline: none;
-    transition: border-color var(--transition-fast);
-}
-
-.label-input:focus {
-    border-color: var(--sc-orange);
-}
-
-body.dark-theme .label-input {
-    background: var(--dark-card);
-    border-color: var(--dark-border);
-    color: var(--dark-text-primary);
-}
-
-.label-create-btn {
-    background: var(--sc-orange);
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--radius-md);
-    color: white;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color var(--transition-fast);
-}
-
-.label-create-btn:hover {
-    background: var(--sc-orange-hover);
-}
-
-/* ===== DRAG & DROP ВИЗУАЛИЗАЦИЯ ===== */
-.note-card.dragging {
-    opacity: 0.6;
-    transform: scale(1.02);
-    border: 2px dashed var(--sc-orange);
-    box-shadow: 0 8px 25px rgba(255, 85, 0, 0.2);
-}
-
-.note-card.drag-over {
-    border-top: 3px solid var(--sc-orange);
-}
-
-/* ===== АДАПТИВНОСТЬ ===== */
-@media (max-width: 768px) {
-    .sidebar {
-        z-index: 95;
-    }
-    
-    .main-content {
-        margin-left: 0;
-    }
-    
-    .notes-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .notes-creator,
-    .note-collapsed,
-    .note-expanded {
-        width: 100%;
-        max-width: 100%;
-    }
-    
-    .formatting-toolbar {
-        overflow-x: auto;
-        flex-wrap: nowrap;
-        padding-bottom: 4px;
-    }
-    
-    .formatting-toolbar::-webkit-scrollbar {
-        height: 4px;
-    }
-    
-    .formatting-toolbar::-webkit-scrollbar-thumb {
-        background: var(--sc-orange);
-        border-radius: 2px;
-    }
-}
-
-/* ===== УТИЛИТЫ ===== */
-.hidden {
-    display: none !important;
-}
-
-/* Скрытие скроллбара для чистого вида */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--light-border);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--sc-orange);
-}
-
-body.dark-theme ::-webkit-scrollbar-thumb {
-    background: var(--dark-border);
-}
-
-body.dark-theme ::-webkit-scrollbar-thumb:hover {
-    background: var(--sc-orange);
+    font-weight: 700;
+    margin-right: 10px;
+}
+.back-btn:hover,
+.delete-current-label-btn:hover {
+    color: var(--text-primary);
 }
