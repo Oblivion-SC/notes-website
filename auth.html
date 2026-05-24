@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-theme">
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Логотип с иконкой -->
+            <div class="auth-logo">
+                <i class="fa-brands fa-soundcloud"></i>
+                <h1>SoundNotes</h1>
+            </div>
+
+            <!-- Форма -->
+            <form id="authForm" novalidate>
+                <div class="input-group">
+                    <label for="emailInput">Email</label>
+                    <input type="email" id="emailInput" required autocomplete="email">
+                </div>
+
+                <div class="input-group">
+                    <label for="passwordInput">Пароль</label>
+                    <input type="password" id="passwordInput" required autocomplete="current-password">
+                </div>
+
+                <!-- Подтверждение пароля (появляется только при регистрации) -->
+                <div class="input-group hidden" id="confirmPasswordGroup">
+                    <label for="confirmPasswordInput">Подтвердите пароль</label>
+                    <input type="password" id="confirmPasswordInput" autocomplete="new-password">
+                </div>
+
+                <button type="submit" id="authBtn">Войти</button>
+                <p id="authMessage" class="auth-message" aria-live="polite"></p>
+            </form>
+
+            <!-- Разделитель "или" -->
+            <div class="auth-divider">
+                <span>или</span>
+            </div>
+
+            <!-- Переключатель внизу -->
+            <div class="auth-switcher">
+                <span id="switchText">Новый пользователь?</span>
+                <a href="#" id="switchBtn">Создать аккаунт</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
