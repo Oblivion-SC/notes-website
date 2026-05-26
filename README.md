@@ -70,8 +70,6 @@
 
 ### 4. Авторы
 
-```
 Верещак Д. - [](https://github.com/Oblivion-SC)
 Василюк Ф. - [](https://github.com/FelixV-sigma)
 Буйдин Н. - [](https://github.com/potsosformu)
-```
