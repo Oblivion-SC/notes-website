@@ -1,4 +1,4 @@
-# SoundNotes — Облачное приложение для заметок
+# SoundNotes – Облачное приложение для заметок
 
 Веб-приложение для создания, редактирования и организации заметок с поддержкой ярлыков, корзины, пользовательских аватаров и поиска. Данные хранятся на сервере (PHP + MySQL).
 
@@ -22,7 +22,7 @@
 
 ### 1. Домен
 
-c98982n6.beget.tech (Безопасно, клянусь!)
+<c98982n6.beget.tech> (Безопасно, клянусь!)
 
 ### 2. Файлы проекта
 
@@ -71,7 +71,7 @@ c98982n6.beget.tech (Безопасно, клянусь!)
 ### 4. Авторы
 
 ```
-Верещак Д. - https://github.com/Oblivion-SC
-Василюк Ф. - https://github.com/FelixV-sigma
-Буйдин Н. - https://github.com/potsosformu
+Верещак Д. - <https://github.com/Oblivion-SC>
+Василюк Ф. - <https://github.com/FelixV-sigma>
+Буйдин Н. - <https://github.com/potsosformu>
 ```
