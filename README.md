@@ -25,6 +25,8 @@
 c98982n6.beget.tech (Безопасно, клянусь!)
 
 ### 2. Файлы проекта
+
+```
 /
 ├── index.html (переименованный auth.html)
 ├── html_main.html
@@ -42,6 +44,7 @@ c98982n6.beget.tech (Безопасно, клянусь!)
 │   ├── labels.php
 │   └── avatar.php  
 └── README.md
+```
 
 ### 3. Скриншоты интерфейсов приложения
 
@@ -67,6 +70,8 @@ c98982n6.beget.tech (Безопасно, клянусь!)
 
 ### 4. Авторы
 
+```
 Верещак Д. - https://github.com/Oblivion-SC
 Василюк Ф. - https://github.com/FelixV-sigma
 Буйдин Н. - https://github.com/potsosformu
+```
