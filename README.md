@@ -18,7 +18,7 @@
 
 - **Фронтенд:** HTML5, CSS3 (Flex/Grid), JavaScript (ES6+), Font Awesome 6
 - **Бэкенд:** PHP 7.4+, MySQL
-- **Сервер:** Apache с поддержкой .htaccess
+- **Сервер:** Apache
 
 ### 1. Домен
 
