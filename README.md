@@ -28,7 +28,8 @@
 
 ```
 /
-├── index.html (переименованный auth.html)
+├── index.html
+├── auth.html
 ├── html_main.html
 ├── styles.css
 ├── auth.js
