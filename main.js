@@ -1,6 +1,7 @@
 /**
  * SoundNotes – Основная логика (серверная версия)
  * Исправлено: удаление/редактирование, работа с id разных типов
+ * Добавлено: закрытие боковой панели при клике вне неё и по пунктам меню
  */
 
 const API_BASE = '/api';
@@ -164,7 +165,7 @@ async function loadNotes() {
         const data = await apiRequest("notes.php");
         notes = data.map(n => ({
             ...n,
-            id: Number(n.id),          // гарантируем числовой id
+            id: Number(n.id),
             labels: n.labels || []
         }));
         renderNotes(searchInput.value);
@@ -350,7 +351,6 @@ async function deleteNoteSoft(id) {
 }
 
 async function restoreNote(id) {
-    // Восстановление: обновляем deleted_at = NULL
     await apiRequest(`notes.php?id=${id}`, {
         method: "PUT",
         body: JSON.stringify({ restore: true })
@@ -717,7 +717,6 @@ async function renderLabelNotes(filter = "") {
 
 // ========== ОСНОВНЫЕ ОБРАБОТЧИКИ ==========
 notesGrid.addEventListener("click", async (e) => {
-    // Удаление ярлыка из заметки
     const removeLabelBtn = e.target.closest(".remove-label-from-note-btn");
     if (removeLabelBtn) {
         e.stopPropagation();
@@ -727,7 +726,6 @@ notesGrid.addEventListener("click", async (e) => {
         return;
     }
 
-    // Редактирование заметки
     const editBtn = e.target.closest(".edit-btn");
     if (editBtn) {
         const id = Number(editBtn.dataset.id);
@@ -741,14 +739,13 @@ notesGrid.addEventListener("click", async (e) => {
         return;
     }
 
-    // Удаление заметки
     const deleteBtn = e.target.closest(".delete-btn");
     if (deleteBtn) {
         const id = Number(deleteBtn.dataset.id);
         const note = notes.find(n => n.id === id);
         if (!note) {
             console.error("Заметка для удаления не найдена, id=", id);
-            alert("Ошибка: заметка не найдена. Возможно, данные не загрузились. Обновите страницу.");
+            alert("Ошибка: заметка не найдена. Обновите страницу.");
             return;
         }
         if (isConfirmDeleteEnabled()) {
@@ -763,7 +760,6 @@ notesGrid.addEventListener("click", async (e) => {
         return;
     }
 
-    // Добавление ярлыка к заметке
     const addLabelBtn = e.target.closest(".add-label-btn");
     if (addLabelBtn) {
         const id = Number(addLabelBtn.dataset.id);
@@ -780,7 +776,6 @@ notesGrid.addEventListener("click", async (e) => {
         return;
     }
 
-    // Клик по ярлыку (поиск по тегу)
     const labelTag = e.target.closest(".label-tag");
     if (labelTag) {
         const labelName = labelTag.getAttribute("data-name");
@@ -869,34 +864,43 @@ deleteCurrentLabelBtn.addEventListener("click", async () => {
     }
 });
 
-// Навигация
+// ========== НАВИГАЦИЯ ==========
 trashBtn.addEventListener("click", (e) => {
     e.preventDefault();
     showScreen(trashScreen);
     setActiveMenuItem("trashBtn");
     renderTrash();
+    sidebar.classList.add('closed');  // закрываем панель
 });
+
 notesBtn.addEventListener("click", (e) => {
     e.preventDefault();
     showScreen(notesScreen);
     setActiveMenuItem("notesBtn");
     renderNotes(searchInput.value);
+    sidebar.classList.add('closed');
 });
+
 settingsBtn.addEventListener("click", (e) => {
     e.preventDefault();
     showScreen(settingsScreen);
     setActiveMenuItem("settingsBtn");
+    sidebar.classList.add('closed');
 });
+
 helpBtn.addEventListener("click", (e) => {
     e.preventDefault();
     showScreen(helpScreen);
     setActiveMenuItem("helpBtn");
+    sidebar.classList.add('closed');
 });
+
 labelsBtn.addEventListener("click", (e) => {
     e.preventDefault();
     showScreen(labelsScreen);
     setActiveMenuItem("labelsBtn");
     renderLabelsList();
+    sidebar.classList.add('closed');
 });
 
 collapsed.addEventListener("click", () => {
@@ -933,6 +937,18 @@ detailsToggle?.addEventListener("change", () => {
 confirmDeleteToggle?.addEventListener("change", saveSettings);
 
 burger.addEventListener("click", () => sidebar.classList.toggle("closed"));
+
+// ========== ЗАКРЫТИЕ БОКОВОЙ ПАНЕЛИ ПРИ КЛИКЕ ВНЕ НЕЁ ==========
+document.addEventListener('click', function(event) {
+    const sidebar = document.getElementById('sidebar');
+    const burger = document.getElementById('burger');
+    if (!sidebar.contains(event.target) && !burger.contains(event.target)) {
+        if (!sidebar.classList.contains('closed')) {
+            sidebar.classList.add('closed');
+        }
+    }
+});
+
 document.querySelectorAll("#logoutBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
         try {
